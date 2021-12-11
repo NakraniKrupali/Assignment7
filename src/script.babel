@@ -1,0 +1,58 @@
+//let counter=0
+function CounterClick(){
+  // const products=["Tea","Coffee","honey","butter"]
+  // const prices=[100,123,45,60]
+  // var Product_Qty=[0,0,0,0];
+ 
+  var [products,setProducts]=React.useState([
+    { name:"Tea", qty: 0 , price:100},
+    { name:"Coffee", qty: 0 , price:200},
+    { name:"Honey", qty: 0 , price:150},
+    { name:"Butter", qty: 0 , price:180}
+    
+  ]);
+   var totalQty=()=>{
+     var total=0;
+     products.forEach(item => {
+       total +=item.qty;
+     });
+     return total;
+   };
+
+  var totalAmount = () =>{
+    var amount =0;
+    products.forEach(item => {
+      amount += item.qty * item.price ;
+    });
+    return amount;
+  }
+  
+  const manageQty = (index,qty) =>{
+    var change =[...products];
+    change[index]={...change[index], qty: qty};
+    setProducts(change);
+  }
+  
+  return(
+    <div>
+      <h1>Cart </h1>
+      { 
+        products?.map((item,index) => 
+        <div key={index}>
+       
+            <h3>{item.name} Qty :{item.qty}  Price :{item.price}</h3>
+            <button onClick={ () => manageQty(index,item.qty +1)}>ADD</button>
+            <button onClick= {() => item.qty == 0 ? 0 : manageQty(index,item.qty -1)}>REMOVE</button>    
+        </div>
+       )
+     }
+    
+      <h3>Total Quantity :{totalQty()} </h3>
+      <h3>Total Amount : {totalAmount()}</h3>
+  </div>
+  );
+}
+ReactDOM.render(
+  <CounterClick/>,
+  document.getElementById('root')
+);
